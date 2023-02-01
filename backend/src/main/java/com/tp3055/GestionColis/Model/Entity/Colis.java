@@ -1,5 +1,7 @@
 package com.tp3055.GestionColis.Model.Entity;
 
+import java.util.Date;
+
 import org.hibernate.annotations.DynamicUpdate;
 
 import jakarta.persistence.Column;
@@ -8,6 +10,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +21,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
@@ -27,7 +31,7 @@ public class Colis {
     @Column
     private Long description;
 
-    private String clientCNI;//CNI du client
+    private String clientCNI;// CNI du client
 
     private String clientName; // nom du client
 
@@ -35,17 +39,19 @@ public class Colis {
 
     private String recieverPhone; // numero telephone du destinataire du colis
 
-    @Column(name="from_town")
+    @Column(name = "from_town")
     private String fromTown; // de la ville
 
-    @Column(name="to_town")
+    @Column(name = "to_town")
     private String toTown; // a la ville
 
     @Enumerated(EnumType.STRING)
-    private State state; // etat du colis
+    private State state = State.ATTENTE; // etat du colis
 
     @Column(unique = true)
     private String expedtionCode;
 
-    
+    @Column(name = "save_on")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date saveDate;
 }

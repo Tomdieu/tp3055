@@ -1,16 +1,15 @@
 package com.tp3055.GestionColis.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tp3055.GestionColis.Model.Entity.Profile;
-import com.tp3055.GestionColis.Model.Entity.Token;
 import com.tp3055.GestionColis.Model.Entity.User;
 import com.tp3055.GestionColis.Model.Serializers.UserSerializer;
 import com.tp3055.GestionColis.Repository.ProfileRepository;
-import com.tp3055.GestionColis.Repository.TokenRepository;
 import com.tp3055.GestionColis.Repository.UserRepository;
 import com.tp3055.GestionColis.utils.LoginRequest;
 import com.tp3055.GestionColis.utils.UserRequest;
@@ -25,13 +24,13 @@ public class UserService {
     private ProfileRepository profileRepository;
 
     @Autowired
-    private TokenRepository tokenRepository;
+    private TokenService tokenService;
 
     public UserSerializer saveUser(UserRequest user) {
 
         User existingUser = userRepository.findByUsername(user.getUsername()).orElse(null);
-        
-        if(existingUser != null){
+
+        if (existingUser != null) {
             throw new IllegalStateException("username already taken");
         }
 
@@ -51,9 +50,7 @@ public class UserService {
                 .build();
         profileRepository.save(profile);
 
-        Token token = Token.builder().user(saveUser).build();
-
-        tokenRepository.save(token);
+        tokenService.generateToken(saveUser);
 
         UserSerializer serializer = new UserSerializer(saveUser);
 
@@ -84,35 +81,77 @@ public class UserService {
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
         System.out.println("User found : " + user);
         if (user != null) {
-            if (user.getPassword() == loginRequest.getPassword()) {
+            System.out.println(user.getPassword() + " " + loginRequest.getPassword());
+            if (isValidPassword(user.getPassword(), loginRequest.getPassword())) {
                 return profileRepository.findProfileByUserId(user.getId());
             }
         }
 
-        return null;
+        throw new IllegalStateException("User not found");
 
     }
 
+    private boolean isValidPassword(String pass1, String pass2) {
+        return pass1.equals(pass2);
+    }
+
     @Transactional
-    public User updateUser(Long id,UserRequest userRequest) {
-        Boolean exist =userRepository.existsById(id);
-        if(!exist){
+    public User updateUser(Long id, UserRequest userRequest) {
+        Boolean exist = userRepository.existsById(id);
+        if (!exist) {
             throw new IllegalStateException("User don't exists");
         }
         User existingUser = userRepository.findById(id).orElse(null);
-        if(userRequest.getUsername()!=null){
-            if(userRepository.findByUsername(userRequest.getUsername()).isPresent()){
+        Profile userProfile = profileRepository.findProfileByUserId(id);
+        if (userRequest.getUsername() != null) {
+            if (userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
                 throw new IllegalStateException("Username already taken");
             }
             existingUser.setUsername(userRequest.getUsername());
         }
-        existingUser.setFirstname(userRequest.getFirstname());
-        existingUser.setLastname(userRequest.getLastname());
-        return null;
+        if (userRequest.getFirstname() != null) {
+            existingUser.setFirstname(userRequest.getFirstname());
+        }
+
+        if (userRequest.getLastname() != null) {
+            existingUser.setLastname(userRequest.getLastname());
+        }
+
+        if (userRequest.getTown() != null) {
+            existingUser.setTown(userRequest.getTown());
+        }
+
+        if (userRequest.getIsAdmin()) {
+            userProfile.setAdmin(userRequest.getIsAdmin());
+        }
+
+        if (userRequest.getIsSaver()) {
+            userProfile.setSaver(userRequest.getIsSaver());
+        }
+
+        if (userRequest.getIsSender()) {
+            userProfile.setSender(userRequest.getIsSender());
+        }
+
+        User u = userRepository.save(existingUser);
+        profileRepository.save(userProfile);
+
+        return u;
     }
 
     public String deleteUser(Long id) {
         userRepository.deleteById(id);
         return "User Deleted!";
+    }
+
+    public User userExistWith(String username, String password) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (!user.isPresent()) {
+            return null;
+        }
+        if (user.get().getPassword().equals(password)) {
+            return user.get();
+        }
+        return null;
     }
 }

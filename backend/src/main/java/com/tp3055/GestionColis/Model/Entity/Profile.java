@@ -28,11 +28,11 @@ public class Profile {
     private User user;
 
     @Column(name = "is_admin")
-    private boolean isAdmin;
+    private boolean isAdmin = false;
     
     @Column(name = "is_enreg")
-    private boolean isSaver;
+    private boolean isSaver = false;
 
     @Column(name="is_envoi")
-    private boolean isSender;
+    private boolean isSender = false;
 }

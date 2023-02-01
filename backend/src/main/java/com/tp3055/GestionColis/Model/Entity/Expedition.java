@@ -41,6 +41,7 @@ public class Expedition implements TypeMovement{
     private Date savedOn;
 
     @Column(name = "send_date")
+    
     private Date date;
     
 }

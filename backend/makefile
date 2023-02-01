@@ -1,2 +1,2 @@
 run:
-	/usr/bin/env /home/ivantom/.vscode/extensions/redhat.java-1.14.0-linux-x64/jre/17.0.5-linux-x86_64/bin/java @/tmp/cp_e8fq5dxwn24ebwaf3ikggvybb.argfile com.tp3055.GestionColis.GestionColisApplication
+	/usr/bin/env /home/ivantom/.vscode/extensions/redhat.java-1.14.0-linux-x64/jre/17.0.5-linux-x86_64/bin/java @/tmp/cp_bdkac83jpdo8qr2r42vx4ww651.argfile com.tp3055.GestionColis.GestionColisApplication

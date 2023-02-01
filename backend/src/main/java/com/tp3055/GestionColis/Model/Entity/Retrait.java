@@ -13,10 +13,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
@@ -36,6 +38,5 @@ public class Retrait {
 
     @Column(name="date_retrait")
     private LocalDateTime withdrawDate; // date du retrait du colis
-
 
 }

@@ -22,6 +22,7 @@ import com.tp3055.GestionColis.utils.LoginRequest;
 import com.tp3055.GestionColis.utils.UserRequest;
 
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(path = "api/user")
@@ -35,7 +36,6 @@ public class UserController {
      */
     @GetMapping(path = "/")
     public ResponseEntity<List<Profile>> getAllUsers(@Nullable @RequestParam String town) {
-        System.out.println("Town : " + town);
         if (town != null)
             return ResponseEntity.ok(service.getAllUsersByTown(town));
 
@@ -54,8 +54,9 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public Profile loginUser(@RequestBody(required = true) LoginRequest loginRequest) {
+    public Profile loginUser(@RequestBody LoginRequest loginRequest,HttpServletRequest request) {
         System.out.println("Enter in login");
+        System.out.println("Auth " + request.getHeader("Authorization"));
         return service.loginUser(loginRequest);
     }
 
