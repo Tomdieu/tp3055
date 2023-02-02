@@ -1,9 +1,10 @@
 package com.tp3055.GestionColis.Controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tp3055.GestionColis.Service.ColisService;
 
 import com.tp3055.GestionColis.Model.Entity.Colis;
+import com.tp3055.GestionColis.Model.Entity.State;
+
 
 @RestController
 @RequestMapping(path = "api/colis")
@@ -23,9 +26,19 @@ public class ColisController {
     @Autowired
     private ColisService colisService;
 
-    @PostMapping
-    public Object addColis(@RequestBody Colis colis) {
-        return colisService.save(colis);
+    @GetMapping("/")
+    public List<Colis> listAllColis(){
+        return colisService.getAll();
+    }
+
+    @PostMapping("/add/{userId}")
+    public Object addColis(@RequestBody Colis colis,@PathVariable Long userId) {
+        return colisService.save(colis,userId);
+    }
+
+    @GetMapping("/{id}/")
+    public Colis getClisById(Long id){
+        return colisService.findById(id);
     }
 
     @GetMapping("/find/{code}")
@@ -52,12 +65,12 @@ public class ColisController {
     public Colis withdrawColis(@PathVariable long colisId,@PathVariable long userId){
         return colisService.withdrawColis(colisId,userId);
     }
-
     @GetMapping("/all")
-    public List<Colis> listColis(@RequestParam String from_date, @RequestParam String to_date,
-            @RequestParam(required = false) String state) {
-
+    public List<Colis> listColis(@RequestParam Date from_date, @RequestParam Date to_date,
+            @RequestParam(required = false) State state) {
+            System.out.println(from_date+" "+to_date);
         if (state != null) {
+
             return colisService.listColisBetweenDate(from_date, to_date, state);
         }
 

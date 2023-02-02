@@ -1,5 +1,6 @@
 package com.tp3055.GestionColis.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tp3055.GestionColis.Model.Entity.Colis;
+import com.tp3055.GestionColis.Model.Entity.State;
 import com.tp3055.GestionColis.Model.Entity.Profile;
 import com.tp3055.GestionColis.Model.Entity.Retrait;
 import com.tp3055.GestionColis.Model.Entity.User;
@@ -17,6 +19,7 @@ import com.tp3055.GestionColis.Repository.UserRepository;
 public class ColisService {
     @Autowired
     private ColisRepository colisRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -79,16 +82,26 @@ public class ColisService {
         return colisRepository.listPendingFromTown(town);
     }
 
-    public List<Colis> listColisBetweenDate(String date1,String date2){
+    public List<Colis> listColisBetweenDate(Date date1,Date date2){
         return colisRepository.listColisBetweenDate(date1,date2);
     }
 
-    public List<Colis> listColisBetweenDate(String date1,String date2,String state){
+    public List<Colis> listColisBetweenDate(Date date1,Date date2,State state){
         return colisRepository.listColisBetweenDate(date1,date2,state);
     }
 
-    public Object save(Colis colis) {
-        return colisRepository.save(colis);
+    public Object save(Colis colis,Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if(user == null){
+            throw new IllegalStateException("error agent n'existe pas!");
+        }
+
+        Colis c = colisRepository.save(colis);
+
+        expeditionService.save(colis, user);
+
+        return c;
+
     }
 
     public Colis sendColis(long colisId, long userId) {
@@ -100,7 +113,11 @@ public class ColisService {
         if(user == null){
             throw new IllegalStateException("error agent n'existe pas!");
         }
-        expeditionService.save(colis,user);
+        colis.setState(State.EXPEDIE);
+
+        colisRepository.save(colis);
+
+        expeditionService.sendColis(colis.getId(),user.getId());
 
         return colisRepository.findById(colisId).get();
     }
@@ -114,6 +131,8 @@ public class ColisService {
         if(user == null){
             throw new IllegalStateException("error agent n'existe pas!");
         }
+        colis.setState(State.ARRIVER);
+        colisRepository.save(colis);
         expeditionService.save(colis,user);
 
         return colisRepository.findById(colisId).get();
@@ -132,9 +151,22 @@ public class ColisService {
         if(!profile.isSaver()){
             throw new IllegalStateException("Not allow to withdraw a package");
         }
+        colis.setState(State.RETIRER);
+        colisRepository.save(colis);
+
         Retrait retrait = retraitService.withdrawColis(colisId, userId);
 
         return retrait.getColis();
     }
+
+    public Colis findById(Long id) {
+        return colisRepository.findById(id).orElse(null);
+    }
+
+    public List<Colis> getAll() {
+        return colisRepository.findAll();
+    }
+
+
 
 }

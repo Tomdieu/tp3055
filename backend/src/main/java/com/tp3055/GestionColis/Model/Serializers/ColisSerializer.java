@@ -7,7 +7,7 @@ import com.tp3055.GestionColis.Model.Entity.State;
 
 public class ColisSerializer {
     private Long id;
-    private Long description;
+    private String description;
     private String clientCNI;// CNI du client
     private String clientName; // nom du client
     private String recieverName; // nom du destinataire
@@ -42,11 +42,11 @@ public class ColisSerializer {
         this.id = id;
     }
 
-    public Long getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Long description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

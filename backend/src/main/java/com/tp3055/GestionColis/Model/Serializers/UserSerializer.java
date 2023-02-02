@@ -1,14 +1,30 @@
 package com.tp3055.GestionColis.Model.Serializers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.tp3055.GestionColis.Model.Entity.Profile;
 import com.tp3055.GestionColis.Model.Entity.User;
 import com.tp3055.GestionColis.Repository.ProfileRepository;
 
+import lombok.Data;
 
-public class UserSerializer extends User {
+// @Component
+@Data
+public class UserSerializer{
     private Profile profile;
+
+    private Long id;
+
+    private String firstname;
+
+    private String lastname;
+
+    private String username;
+
+    private String password;
+
+    private String town;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -27,8 +43,7 @@ public class UserSerializer extends User {
 
     public Profile loadProfile() {
         System.out.println("Repo : "+profileRepository);
-            return null;
-        // return profileRepository.findProfileByUser(this.getId()).orElse(null);
+        return profileRepository.findProfileByUserId(this.getId());
     }
 
     public Profile getProfile() {

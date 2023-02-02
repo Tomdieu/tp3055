@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public ResponseEntity<UserSerializer> registerUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<Profile> registerUser(@RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(service.saveUser(userRequest));
     }
 

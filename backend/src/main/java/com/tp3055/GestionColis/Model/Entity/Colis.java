@@ -2,7 +2,9 @@ package com.tp3055.GestionColis.Model.Entity;
 
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +17,6 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,7 +30,7 @@ public class Colis {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column
-    private Long description;
+    private String description;
 
     private String clientCNI;// CNI du client
 
@@ -53,5 +54,11 @@ public class Colis {
 
     @Column(name = "save_on")
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date saveDate;
+
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    private Date updatedAt;
 }

@@ -4,11 +4,13 @@ import java.util.Date;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @DynamicUpdate
-public class Expedition implements TypeMovement{
+public class Expedition implements TypeMovement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,15 +35,20 @@ public class Expedition implements TypeMovement{
     @OneToOne
     private Colis Colis;
 
-    @ManyToOne
-    private User senderValidator;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "save_by")
+    private User saveBy;
 
-    @Column(name="save_on")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "send_by")
+    private User sendBy;
+
+    @Column(name = "save_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date savedOn;
 
     @Column(name = "send_date")
-    
+
     private Date date;
-    
+
 }

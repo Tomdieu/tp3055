@@ -26,11 +26,11 @@ public class RetraitService {
     @Autowired
     private UserRepository userRepository;
 
-    public Retrait Save(Colis colis){
+    public Retrait save(Colis colis,User user){
         Retrait retrait = new Retrait();
         retrait.setColis(colis);
         retrait.setArriveDate(LocalDateTime.now());
-        
+        retrait.setArriveBy(user);
         return retraitRepository.save(retrait);
     }
 

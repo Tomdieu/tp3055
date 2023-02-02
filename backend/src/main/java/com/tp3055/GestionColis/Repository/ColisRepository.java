@@ -38,9 +38,9 @@ public interface ColisRepository extends JpaRepository<Colis, Long> {
     List<Colis> listPendingFromTown(String town);
 
     @Query("SELECT c FROM Colis c WHERE c.saveDate BETWEEN ?1 AND ?2")
-    List<Colis> listColisBetweenDate(String date1, String date2);
+    List<Colis> listColisBetweenDate(Date date1, Date date2);
 
     @Query("SELECT c FROM Colis c WHERE c.state = ?3 and c.saveDate BETWEEN ?1 AND ?2 ")
-    List<Colis> listColisBetweenDate(String date1, String date2, String state);
+    List<Colis> listColisBetweenDate(Date date1, Date date2, State state);
 
 }

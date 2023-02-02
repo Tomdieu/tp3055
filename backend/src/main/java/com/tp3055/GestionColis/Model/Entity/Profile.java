@@ -35,4 +35,8 @@ public class Profile {
 
     @Column(name="is_envoi")
     private boolean isSender = false;
+
+    public Profile orElse(Object object) {
+        return null;
+    }
 }

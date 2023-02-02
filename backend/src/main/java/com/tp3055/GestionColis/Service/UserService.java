@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.tp3055.GestionColis.Model.Entity.Profile;
 import com.tp3055.GestionColis.Model.Entity.User;
-import com.tp3055.GestionColis.Model.Serializers.UserSerializer;
 import com.tp3055.GestionColis.Repository.ProfileRepository;
 import com.tp3055.GestionColis.Repository.UserRepository;
 import com.tp3055.GestionColis.utils.LoginRequest;
@@ -26,7 +25,11 @@ public class UserService {
     @Autowired
     private TokenService tokenService;
 
-    public UserSerializer saveUser(UserRequest user) {
+    public User findById(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public Profile saveUser(UserRequest user) {
 
         User existingUser = userRepository.findByUsername(user.getUsername()).orElse(null);
 
@@ -51,10 +54,7 @@ public class UserService {
         profileRepository.save(profile);
 
         tokenService.generateToken(saveUser);
-
-        UserSerializer serializer = new UserSerializer(saveUser);
-
-        return serializer;
+        return profile;
     }
 
     public Profile getUserById(Long id) {
