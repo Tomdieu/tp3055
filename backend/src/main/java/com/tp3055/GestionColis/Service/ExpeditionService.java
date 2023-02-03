@@ -1,6 +1,7 @@
 package com.tp3055.GestionColis.Service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class ExpeditionService {
     @Autowired
     public UserService userService;
 
+    public Expedition getColisById(Long id){
+        return expeditionRepository.findColisById(id);
+    }
+
     public Expedition save(Colis colis, User sender) {
         Expedition exp = Expedition.builder().saveBy(sender).Colis(colis).date(new Date()).build();
         return expeditionRepository.save(exp);
@@ -46,5 +51,13 @@ public class ExpeditionService {
         colisRepository.save(colis);
 
         return expeditionRepository.save(exp);
+    }
+
+    public List<Expedition> getColisPending(String town) {
+        return expeditionRepository.listColisSaveByTown(town);
+    }
+
+    public List<Expedition> getColisSend(String town) {
+        return expeditionRepository.listColisSendByTown(town);
     }
 }

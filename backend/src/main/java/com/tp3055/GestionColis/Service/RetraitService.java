@@ -3,6 +3,7 @@ package com.tp3055.GestionColis.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,4 +64,21 @@ public class RetraitService {
         return retraitRepository.save(retrait);
 
     }
+
+    public Retrait getColisById(Long colisId) {
+        return retraitRepository.findByColisId(colisId);
+    }
+
+    public List<Retrait> getColisArrive(String town){
+        return retraitRepository.listColisByTown(town);
+    }
+
+    public List<Retrait> getColisWithdraw(String town) {
+        return retraitRepository.listColisWithdrawByTown(town);
+    }
+
+    public List<Retrait> getRetraitByTown(String town){
+        return retraitRepository.listColisArriveByTown(town);
+    }
+    
 }

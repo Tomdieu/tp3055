@@ -32,18 +32,19 @@ public class Colis {
     @Column
     private String description;
 
-    private String clientCNI;// CNI du client
+    private String clientCNI="";// CNI du client
 
-    private String clientName; // nom du client
+    private String clientName=""; // nom du client
 
+    @Column(nullable = false)
     private String recieverName; // nom du destinataire
 
     private String recieverPhone; // numero telephone du destinataire du colis
 
-    @Column(name = "from_town")
+    @Column(name = "from_town",nullable=false)
     private String fromTown; // de la ville
 
-    @Column(name = "to_town")
+    @Column(name = "to_town",nullable=false)
     private String toTown; // a la ville
 
     @Enumerated(EnumType.STRING)
