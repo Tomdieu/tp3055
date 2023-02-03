@@ -56,7 +56,7 @@ const index = () => {
           Ajouter Colis
         </MenuItem>
         <MenuItem icon={<ContactsOutlinedIcon />} href="/colis">Colis</MenuItem>
-        <MenuItem icon={<ContactsOutlinedIcon />}>Rechercher Colis</MenuItem>
+        <MenuItem icon={<ContactsOutlinedIcon />} href="/search">Rechercher Colis</MenuItem>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Colis Envoyer</MenuItem>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Colis Arriver</MenuItem>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Colis Retirer</MenuItem>

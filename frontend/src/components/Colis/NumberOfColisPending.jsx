@@ -1,9 +1,9 @@
 import { SendRounded } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-
-import {GiCommercialAirplane} from 'react-icons/gi'
 import React from "react";
+
+import {MdOutlinePendingActions} from 'react-icons/md'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,20 +30,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const NumberOfColisSend = ({value=0}) => {
-    const classes = useStyles();
 
-    return (
-      <Box className={classes.container}>
-        <Box>
+const NumberOfColisPending = ({value=0}) => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.container}>
+      <Box>
       <Typography fontWeight={"600"} variant={"h1"}>
         {value}
       </Typography>
-      <Typography>Send</Typography>
+      <Typography>PENDING</Typography>
       </Box>
-        <GiCommercialAirplane className={classes.icon}/>
-      </Box>
-    )
-}
+      <MdOutlinePendingActions  className={classes.icon} />
+    </Box>
+  );
+};
 
-export default NumberOfColisSend
+export default NumberOfColisPending;

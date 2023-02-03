@@ -31,15 +31,15 @@ const Colis = () => {
       });
   }, []);
   return (
-    <Grid container sx={(theme)=>({padding:theme.spacing(2)})}>
+    <Grid container sx={(theme)=>({padding:theme.spacing(2),backgroundColor:"rgb(51, 51, 51)	"})} width={'100%'}>
 
-      <Grid item columns={12}>
+      <Grid item columns={12} md>
       <Typography variant="h3" textAlign={"left"}>Colis</Typography>
       <TableContainer component={Paper} sx={{width:'100%'}}>
-        <Table aria-label="colis-table">
+        <Table aria-label="colis-table" stickyHeader>
           <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
+            <TableRow sx={(theme)=>({backgroundColor:theme.palette.primary})}>
+              <TableCell>ID</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Sender CNI</TableCell>
               <TableCell>Sender Name</TableCell>

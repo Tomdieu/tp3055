@@ -1,7 +1,9 @@
 import { ErrorOutline } from '@mui/icons-material'
 import { Container, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../../context/AuthContext'
 
 const useStyles = makeStyles((theme)=>({
   root:{
@@ -26,6 +28,15 @@ const useStyles = makeStyles((theme)=>({
 
 const index = () => {
   const classes = useStyles();
+  const {userId} = useAuthContext()
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(userId === null){
+      navigate("/login")
+    }
+
+  },[])
   return (
     <Container maxWidth="sm">
       <div className={classes.root}>

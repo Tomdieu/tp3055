@@ -166,6 +166,12 @@ public class ColisService {
         }
         if (!profile.isSaver()) {
             throw new IllegalStateException("Not allow to withdraw a package");
+
+
+        }
+        if (colis.getState() == State.ARRIVER) {
+            throw new IllegalStateException(
+                    "Desoler vous ne pouvez pas retirer le colis car il a deja etait retirer");
         }
         if (colis.getState() != State.ARRIVER) {
             throw new IllegalStateException(

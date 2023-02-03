@@ -2,6 +2,7 @@ package com.tp3055.GestionColis.Model.Entity;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,16 +25,19 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     @Column(name = "is_admin")
+    @Builder.Default
     private boolean isAdmin = false;
     
     @Column(name = "is_enreg")
+    @Builder.Default
     private boolean isSaver = false;
 
     @Column(name="is_envoi")
+    @Builder.Default
     private boolean isSender = false;
 
     public Profile orElse(Object object) {

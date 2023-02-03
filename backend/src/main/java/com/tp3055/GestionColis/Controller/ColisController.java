@@ -24,7 +24,7 @@ import com.tp3055.GestionColis.Model.Entity.State;
 @RestController
 @RequestMapping(path = "api/colis")
 @CrossOrigin(origins = "*")
-public class ColisController {
+public class ColisController {                                                                                                          
 
     @Autowired
     private ColisService colisService;

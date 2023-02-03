@@ -12,6 +12,7 @@ import SideBar from "../components/SideBar";
 import { useAuthContext } from "../context/AuthContext";
 import { Grid } from "@mui/material";
 import Colis from "../pages/Colis/Colis";
+import Recherche from "../pages/Colis/Recherche";
 
 const index = () => {
   const { userId } = useAuthContext();
@@ -26,6 +27,7 @@ const index = () => {
             position: "absolute",
             top: 0,
             left: 0,
+            bottom:0
           }}
         >
           <SideBar />
@@ -41,6 +43,7 @@ const index = () => {
               <Route path="/" element={<Home />} />
               <Route path="/add-colis" element={<AddColis />} />
               <Route path="/colis" element={<Colis/>} />
+              <Route path="/search" element={<Recherche />} />
               <Route path="/*" element={<NotFound />} />
 
             </Routes>
@@ -50,6 +53,7 @@ const index = () => {
         <React.Fragment>
           
                 <Routes>
+                  <Route path="/" element={<Login />} />
                   <Route path="/login" element={<Login />} />
                   <Route exact path="/register/" element={<Register />} />
                   <Route path="/*" element={<NotFound />} />
