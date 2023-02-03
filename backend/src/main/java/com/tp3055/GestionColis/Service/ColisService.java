@@ -89,6 +89,14 @@ public class ColisService {
     public List<Colis> listColisBetweenDate(Date date1,Date date2,State state){
         return colisRepository.listColisBetweenDate(date1,date2,state);
     }
+    
+    public List<Colis> listColisBetweenDate(String town,Date date1,Date date2){
+        return colisRepository.listColisBetweenDate(town,date1,date2);
+    }
+
+    public List<Colis> listColisBetweenDate(String town,Date date1,Date date2,State state){
+        return colisRepository.listColisBetweenDate(town,date1,date2,state);
+    }
 
     public Object save(Colis colis,Long userId) {
         User user = userRepository.findById(userId).orElse(null);

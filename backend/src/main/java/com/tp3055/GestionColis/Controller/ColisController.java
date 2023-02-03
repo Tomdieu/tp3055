@@ -77,4 +77,16 @@ public class ColisController {
         return colisService.listColisBetweenDate(from_date, to_date);
 
     }
+    @GetMapping("/filter/{town}")
+    public List<Colis> listColis(@RequestParam Date from_date, @RequestParam Date to_date,
+            @RequestParam(required = false) State state,@PathVariable String town) {
+            System.out.println(from_date+" "+to_date);
+        if (state != null) {
+
+            return colisService.listColisBetweenDate(town,from_date, to_date, state);
+        }
+
+        return colisService.listColisBetweenDate(town,from_date, to_date);
+
+    }
 }
