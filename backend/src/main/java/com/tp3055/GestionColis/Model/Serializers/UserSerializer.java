@@ -1,8 +1,6 @@
 package com.tp3055.GestionColis.Model.Serializers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.tp3055.GestionColis.Model.Entity.Profile;
 import com.tp3055.GestionColis.Model.Entity.User;
 import com.tp3055.GestionColis.Repository.ProfileRepository;

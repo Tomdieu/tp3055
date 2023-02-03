@@ -3,8 +3,6 @@ package com.tp3055.GestionColis.Controller;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
